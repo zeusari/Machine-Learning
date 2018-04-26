@@ -4,15 +4,9 @@ import requests
 from requests import session
 import logging
 
-# payload
-payload = {
-    'action': 'login',
-    'username': os.environ.get('KAGGLE_USER_NAME'),
-    'password': os.environ.get('KAGGLE_PASSWORD')
-}
-
 def extract_data(url, filepath):
     with session() as c:
+        print(payload)
         c.post('https://www.kaggle.com/account/login', data=payload)
         with open(filepath, 'wb') as handle:
             response = c.get(url, stream=True)
@@ -41,5 +35,10 @@ if __name__ == '__main__':
 
     dotenv_path = find_dotenv()
     load_dotenv(dotenv_path)
-
+    # payload
+    payload = {
+        'action': 'login',
+        'username': os.environ.get('KAGGLE_USER_NAME'),
+        'password': os.environ.get('KAGGLE_PASSWORD')
+    }
     main(project_dir)
